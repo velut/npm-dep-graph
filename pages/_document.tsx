@@ -1,4 +1,4 @@
-import clsx from "clsx";
+import { clsx } from "clsx";
 import { Head, Html, Main, NextScript } from "next/document";
 
 const Document = () => {
