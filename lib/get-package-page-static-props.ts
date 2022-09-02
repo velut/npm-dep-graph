@@ -1,7 +1,6 @@
 import { GetStaticPropsResult } from "next";
 import parseSlugPackages from "./parse-slug-packages";
-import resolvePackageIds from "./resolve-package-ids";
-import uniquePackages from "./unique-packages";
+import resolvePackages from "./resolve-packages";
 
 export interface PackagePageProps {
   [key: string]: unknown;
@@ -10,12 +9,11 @@ export interface PackagePageProps {
 const getPackagePageStaticProps = async (
   slug: string[]
 ): Promise<GetStaticPropsResult<PackagePageProps>> => {
-  const route = slug.join("/");
   const parsedPackages = parseSlugPackages(slug);
-  const resolvedPackages = await resolvePackageIds(parsedPackages);
-  const packages = uniquePackages(resolvedPackages);
+  const packages = await resolvePackages(parsedPackages);
+  const originalRoute = slug.join("/");
   const canonicalRoute = packages.join(",");
-  if (route !== canonicalRoute) {
+  if (originalRoute !== canonicalRoute) {
     return {
       redirect: {
         destination: `/package/${canonicalRoute}`,
@@ -23,7 +21,11 @@ const getPackagePageStaticProps = async (
       },
     };
   }
-  return { props: { slug, parsedPackages, packages, route, canonicalRoute } };
+  return {
+    props: {
+      packages,
+    },
+  };
 };
 
 export default getPackagePageStaticProps;
