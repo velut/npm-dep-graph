@@ -22,8 +22,8 @@ const tryResolvePackageId = async (
   }
 };
 
-const resolvePackageIds = async (packages: string[]): Promise<string[]> => {
+const resolvePackages = async (packages: string[]): Promise<string[]> => {
   return pMap(packages, tryResolvePackageId, { concurrency: 2 });
 };
 
-export default resolvePackageIds;
+export default resolvePackages;
