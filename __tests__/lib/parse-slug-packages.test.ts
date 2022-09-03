@@ -29,12 +29,22 @@ describe("parseSlugPackages", () => {
       "@bbb/ccc",
       "aaa",
     ]);
+    expect(parseSlugPackages(slug("aaa@,@bbb/ccc@"))).toEqual([
+      "@bbb/ccc@",
+      "aaa@",
+    ]);
   });
   it("bare package", () => {
     expect(parseSlugPackages(slug("foobar"))).toEqual(["foobar"]);
   });
   it("bare package with version", () => {
     expect(parseSlugPackages(slug("foobar@1.0.0"))).toEqual(["foobar@1.0.0"]);
+  });
+  it("bare package with spaces around version prefix", () => {
+    expect(parseSlugPackages(slug("foobar @ 1.0.0"))).toEqual(["foobar@1.0.0"]);
+  });
+  it("bare package with version prefix but missing version", () => {
+    expect(parseSlugPackages(slug("foobar@"))).toEqual(["foobar@"]);
   });
   it("scoped package", () => {
     expect(parseSlugPackages(slug("@foo/bar"))).toEqual(["@foo/bar"]);
@@ -43,6 +53,14 @@ describe("parseSlugPackages", () => {
     expect(parseSlugPackages(slug("@foo/bar@1.0.0"))).toEqual([
       "@foo/bar@1.0.0",
     ]);
+  });
+  it("scoped package with spaces around version prefix", () => {
+    expect(parseSlugPackages(slug("@foo/bar @ 1.0.0"))).toEqual([
+      "@foo/bar@1.0.0",
+    ]);
+  });
+  it("scoped package with version prefix but missing version", () => {
+    expect(parseSlugPackages(slug("@foo/bar@"))).toEqual(["@foo/bar@"]);
   });
   it("multiple bare packages", () => {
     expect(
