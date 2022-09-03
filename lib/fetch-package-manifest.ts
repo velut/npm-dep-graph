@@ -3,7 +3,7 @@ import urlJoin from "url-join";
 import validateNpmPackageName from "validate-npm-package-name";
 import { PackageManifest, packageManifestSchema } from "./package-manifest";
 
-export const npmRegistry = "https://registry.npmjs.org";
+export const registry = process.env.REGISTRY as string;
 
 const fetchPackageManifest = async (
   name: string,
@@ -15,7 +15,7 @@ const fetchPackageManifest = async (
   if (version === "") {
     throw new Error(`fetchPackageManifest: empty version for package: ${name}`);
   }
-  const res = await fetch(urlJoin(npmRegistry, name, version));
+  const res = await fetch(urlJoin(registry, name, version));
   const data = await res.json();
   const manifest = packageManifestSchema.parse(data);
   return manifest;
