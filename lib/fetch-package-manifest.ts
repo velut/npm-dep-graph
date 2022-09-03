@@ -2,8 +2,7 @@ import fetch from "cross-fetch";
 import urlJoin from "url-join";
 import validateNpmPackageName from "validate-npm-package-name";
 import { PackageManifest, packageManifestSchema } from "./package-manifest";
-
-export const registry = process.env.REGISTRY as string;
+import registry from "./registry";
 
 const fetchPackageManifest = async (
   name: string,
