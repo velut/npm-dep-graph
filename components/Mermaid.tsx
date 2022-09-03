@@ -10,6 +10,7 @@ const Mermaid = ({ diagram }: { diagram: string }) => {
     mermaid.initialize({
       theme: (isDarkMode ? "dark" : "default") as any,
       fontFamily: fontMono,
+      securityLevel: "loose" as any,
     });
     mermaid.contentLoaded();
   }, []);

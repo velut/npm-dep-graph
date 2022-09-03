@@ -1,9 +1,11 @@
 import { GetStaticPropsResult } from "next";
+import buildDiagram from "./build-diagram";
 import parseSlugPackages from "./parse-slug-packages";
 import resolvePackages from "./resolve-packages";
 
 export interface PackagePageProps {
   packages: string[];
+  diagram: string;
   [key: string]: unknown;
 }
 
@@ -22,9 +24,11 @@ const getPackagePageStaticProps = async (
       },
     };
   }
+  const diagram = buildDiagram(packages);
   return {
     props: {
       packages,
+      diagram,
     },
   };
 };

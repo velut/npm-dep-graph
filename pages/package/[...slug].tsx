@@ -1,16 +1,23 @@
 import { GetStaticPaths, GetStaticProps } from "next";
+import dynamic from "next/dynamic";
+import { useEffect } from "react";
 import getPackagePageStaticProps, {
   PackagePageProps,
 } from "../../lib/get-package-page-static-props";
 
+const Mermaid = dynamic(() => import("../../components/Mermaid"), {
+  ssr: false,
+});
+
 const PackagesPage = (props: PackagePageProps) => {
+  useEffect(() => {
+    console.log(JSON.stringify(props, null, 2));
+    console.log(props.diagram);
+  }, [props]);
+
   return (
     <div>
-      <h1 className="font-bold text-center">Packages Page</h1>
-
-      <pre className="mt-12">
-        <code>{JSON.stringify(props, null, 2)}</code>
-      </pre>
+      <Mermaid diagram={props.diagram} />
     </div>
   );
 };
