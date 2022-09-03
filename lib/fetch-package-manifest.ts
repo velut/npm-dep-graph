@@ -10,7 +10,10 @@ const fetchPackageManifest = async (
   version = "latest"
 ): Promise<PackageManifest> => {
   if (!validateNpmPackageName(name).validForOldPackages) {
-    throw new Error(`fetchPackageManifest: invalid package name: ${name}`);
+    throw new Error(`fetchPackageManifest: invalid name for package: ${name}`);
+  }
+  if (version === "") {
+    throw new Error(`fetchPackageManifest: empty version for package: ${name}`);
   }
   const res = await fetch(urlJoin(npmRegistry, name, version));
   const data = await res.json();
