@@ -3,6 +3,7 @@ import parseSlugPackages from "./parse-slug-packages";
 import resolvePackages from "./resolve-packages";
 
 export interface PackagePageProps {
+  packages: string[];
   [key: string]: unknown;
 }
 
