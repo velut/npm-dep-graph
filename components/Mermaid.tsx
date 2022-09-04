@@ -13,7 +13,7 @@ const Mermaid = ({ diagram }: { diagram: string }) => {
       securityLevel: "loose" as any,
     });
     mermaid.contentLoaded();
-  }, []);
+  }, [diagram]);
 
   return <div className="mermaid">{diagram}</div>;
 };
