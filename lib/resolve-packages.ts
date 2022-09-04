@@ -20,7 +20,9 @@ const tryResolvePackage = async (
 };
 
 const resolvePackages = async (packages: string[]): Promise<string[]> => {
-  return pMap(packages, tryResolvePackage, { concurrency: 2 });
+  return Array.from(
+    new Set(await pMap(packages, tryResolvePackage, { concurrency: 2 }))
+  ).sort((a, b) => a.localeCompare(b));
 };
 
 export default resolvePackages;
