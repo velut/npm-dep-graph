@@ -1,10 +1,11 @@
 import { GetStaticPropsResult } from "next";
 import buildDiagram from "./build-diagram";
+import { Package } from "./package";
 import parseSlugPackageNames from "./parse-slug-package-names";
 import resolvePackages from "./resolve-packages";
 
 export interface PackagePageProps {
-  packages: string[];
+  packages: Package[];
   diagram: string;
   [key: string]: unknown;
 }
@@ -15,7 +16,7 @@ const getPackagePageStaticProps = async (
   const names = parseSlugPackageNames(slug);
   const packages = await resolvePackages(names);
   const originalRoute = slug.join("/");
-  const canonicalRoute = packages.join(",");
+  const canonicalRoute = packages.map(({ id }) => id).join(",");
   if (originalRoute !== canonicalRoute) {
     return {
       redirect: {
