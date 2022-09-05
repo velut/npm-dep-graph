@@ -1,6 +1,6 @@
 import { GetStaticPropsResult } from "next";
 import buildDiagram from "./build-diagram";
-import parseSlugPackages from "./parse-slug-packages";
+import parseSlugPackageNames from "./parse-slug-package-names";
 import resolvePackages from "./resolve-packages";
 
 export interface PackagePageProps {
@@ -12,8 +12,8 @@ export interface PackagePageProps {
 const getPackagePageStaticProps = async (
   slug: string[]
 ): Promise<GetStaticPropsResult<PackagePageProps>> => {
-  const parsedPackages = parseSlugPackages(slug);
-  const packages = await resolvePackages(parsedPackages);
+  const names = parseSlugPackageNames(slug);
+  const packages = await resolvePackages(names);
   const originalRoute = slug.join("/");
   const canonicalRoute = packages.join(",");
   if (originalRoute !== canonicalRoute) {

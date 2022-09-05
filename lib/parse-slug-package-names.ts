@@ -4,7 +4,7 @@ import squash from "just-squash";
  * @param slug the slug list parsed by Next.js
  * @returns a sorted list of unique package names and/or package version IDs
  */
-const parseSlugPackages = (slug: string[]): string[] => {
+const parseSlugPackageNames = (slug: string[]): string[] => {
   return Array.from(
     new Set(
       slug
@@ -35,4 +35,4 @@ const parseSlugPackages = (slug: string[]): string[] => {
   ).sort((a, b) => a.localeCompare(b));
 };
 
-export default parseSlugPackages;
+export default parseSlugPackageNames;
