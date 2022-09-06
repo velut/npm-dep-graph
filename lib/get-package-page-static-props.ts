@@ -7,7 +7,7 @@ import resolvePackages from "./resolve-packages";
 
 export interface PackagePageProps {
   packages: Package[];
-  diagram: string;
+  dependenciesDiagram: string;
   [key: string]: unknown;
 }
 
@@ -28,11 +28,11 @@ const getPackagePageStaticProps = async (
       },
     };
   }
-  const diagram = buildDiagram(packages);
+  const dependenciesDiagram = buildDiagram(packages);
   return {
     props: {
       packages,
-      diagram,
+      dependenciesDiagram,
     },
   };
 };

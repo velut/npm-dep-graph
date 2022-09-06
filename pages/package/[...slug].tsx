@@ -12,12 +12,12 @@ const Mermaid = dynamic(() => import("../../components/Mermaid"), {
 const PackagesPage = (props: PackagePageProps) => {
   useEffect(() => {
     console.log(JSON.stringify(props, null, 2));
-    console.log(props.diagram);
+    console.log(props.dependenciesDiagram);
   }, [props]);
 
   return (
     <div>
-      <Mermaid diagram={props.diagram} />
+      <Mermaid diagram={props.dependenciesDiagram} />
     </div>
   );
 };
