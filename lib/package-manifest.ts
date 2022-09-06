@@ -6,8 +6,8 @@ export const packageManifestSchema = z
     name: z.string(),
     version: z.string(),
     description: z.string().optional(),
-    dependencies: z.record(z.string()).optional(),
-    devDependencies: z.record(z.string()).optional(),
+    dependencies: z.record(z.string()).optional().default({}),
+    devDependencies: z.record(z.string()).optional().default({}),
   })
   .transform((manifest) => {
     const { _id, ...rest } = manifest;
