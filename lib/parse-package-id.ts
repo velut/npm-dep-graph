@@ -1,4 +1,4 @@
-const packageFromId = (id: string): { name: string; version?: string } => {
+const parsePackageId = (id: string): { name: string; version?: string } => {
   // Find the name and version given a package ID.
   // For example, `foo@1.0.0` => `{ name: "foo", version: "1.0.0"}`.
   const versionPrefixPos = id.lastIndexOf("@");
@@ -8,4 +8,4 @@ const packageFromId = (id: string): { name: string; version?: string } => {
   return { name, version };
 };
 
-export default packageFromId;
+export default parsePackageId;
