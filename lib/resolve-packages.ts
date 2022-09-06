@@ -1,5 +1,6 @@
 import pMap, { pMapSkip } from "p-map";
 import fetchPackageManifest from "./fetch-package-manifest";
+import logger from "./logger";
 import { Package } from "./package";
 import packageFromId from "./package-from-id";
 
@@ -19,15 +20,29 @@ const tryResolvePackage = async (
   try {
     const pkg = await resolvePackage(pkgId);
     return pkg;
-  } catch {
+  } catch (err) {
+    const log = logger.child({ fn: "tryResolvePackage" });
+    log.error(err);
     return pMapSkip;
   }
 };
 
+const uniquePackages = (pkgs: Package[]) => {
+  const seenIds = new Set();
+  return pkgs.flatMap((pkg) => {
+    if (seenIds.has(pkg.id)) {
+      return [];
+    }
+    seenIds.add(pkg.id);
+    return pkg;
+  });
+};
+
 const resolvePackages = async (pkgIds: string[]): Promise<Package[]> => {
-  return Array.from(
-    new Set(await pMap(pkgIds, tryResolvePackage, { concurrency: 2 }))
-  ).sort((a, b) => a.id.localeCompare(b.id));
+  const allPackages = await pMap(pkgIds, tryResolvePackage, {
+    concurrency: 2,
+  });
+  return uniquePackages(allPackages).sort((a, b) => a.id.localeCompare(b.id));
 };
 
 export default resolvePackages;
