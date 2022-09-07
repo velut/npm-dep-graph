@@ -3,6 +3,8 @@ import buildDiagram from "./build-diagram";
 import fetchPackages from "./fetch-packages";
 import logger from "./logger";
 import { Package } from "./package";
+import packagesCanonicalRoute from "./packages-canonical-route";
+import packagesSlugRoute from "./packages-slug-route";
 import parseSlugPackageIds from "./parse-slug-package-ids";
 
 export interface PackagePageProps {
@@ -18,10 +20,13 @@ const getPackagePageStaticProps = async (
 ): Promise<GetStaticPropsResult<PackagePageProps>> => {
   const slugIds = parseSlugPackageIds(slug);
   const rootPackages = await fetchPackages(slugIds);
-  const originalRoute = slug.join("/");
-  const canonicalRoute = rootPackages.map(({ id }) => id).join(",");
-  log.info({ slug, slugIds, rootPackages, originalRoute, canonicalRoute });
+  const originalRoute = packagesSlugRoute(slug);
+  const canonicalRoute = packagesCanonicalRoute(rootPackages);
   if (originalRoute !== canonicalRoute) {
+    log.info(
+      { originalRoute, canonicalRoute },
+      "redirecting to canonical route"
+    );
     return {
       redirect: {
         destination: `/package/${canonicalRoute}`,
