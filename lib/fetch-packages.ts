@@ -1,26 +1,12 @@
+import dedupePackages from "./dedupe-packages";
 import fetchPackage from "./fetch-package";
-import logger from "./logger";
 import { Package } from "./package";
-
-const log = logger.child({ fn: "fetchPackages" });
+import sortPackagesById from "./sort-packages-by-id";
 
 const fetchPackages = async (ids: string[]): Promise<Package[]> => {
-  const allRes = await Promise.allSettled(ids.map((id) => fetchPackage(id)));
-  const seenIds = new Set<string>();
-  return allRes
-    .flatMap((res) => {
-      if (res.status === "rejected") {
-        log.error({ err: res.reason });
-        return [];
-      }
-      const pkg = res.value;
-      if (seenIds.has(pkg.id)) {
-        return [];
-      }
-      seenIds.add(pkg.id);
-      return pkg;
-    })
-    .sort((a, b) => a.id.localeCompare(b.id));
+  const res = await Promise.all(ids.map((id) => fetchPackage(id)));
+  const pkgs = res.filter((pkg): pkg is Package => pkg !== undefined);
+  return sortPackagesById(dedupePackages(pkgs));
 };
 
 export default fetchPackages;
