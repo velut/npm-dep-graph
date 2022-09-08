@@ -19,7 +19,7 @@ const getPackagePageStaticProps = async (
   slug: string[]
 ): Promise<GetStaticPropsResult<PackagePageProps>> => {
   const slugIds = parseSlugPackageIds(slug);
-  const rootPackages = await fetchPackages(slugIds);
+  const { packages: rootPackages } = await fetchPackages(slugIds);
   const originalRoute = packagesSlugRoute(slug);
   const canonicalRoute = packagesCanonicalRoute(rootPackages);
   if (originalRoute !== canonicalRoute) {
