@@ -1,9 +1,8 @@
 import { z } from "zod";
 
-export const abbreviatedPackumentSchema = z
+export const packumentSchema = z
   .object({
     name: z.string(),
-    modified: z.string(),
     "dist-tags": z.object({ latest: z.string() }).catchall(z.string()),
     versions: z.record(
       z
@@ -24,10 +23,9 @@ export const abbreviatedPackumentSchema = z
   .transform((data) => {
     return {
       name: data.name,
-      modifiedAt: data.modified,
       distTags: data["dist-tags"],
       versions: data.versions,
     };
   });
 
-export type AbbreviatedPackument = z.infer<typeof abbreviatedPackumentSchema>;
+export type Packument = z.infer<typeof packumentSchema>;
