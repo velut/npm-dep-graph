@@ -12,7 +12,7 @@ const abbreviatedOrFullPackument =
 
 const fetchPackument = async (name: string): Promise<Packument> => {
   if (!validateNpmPackageName(name).validForOldPackages) {
-    log.error({ name }, "invalid name for package");
+    log.error({ pkgName: name }, "invalid name for package");
     throw new Error(`fetchPackument: invalid name for package: ${name}`);
   }
   const res = await fetch(urlJoin(registryApi, name), {
