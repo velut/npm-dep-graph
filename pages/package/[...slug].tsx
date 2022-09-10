@@ -13,6 +13,7 @@ const PackagesPage = (props: PackagePageProps) => {
   useEffect(() => {
     console.log(JSON.stringify(props, null, 2));
     console.log(props.dependenciesDiagram);
+    console.log(props.dependenciesDiagram.length);
   }, [props]);
 
   return (
