@@ -11,6 +11,7 @@ const Mermaid = ({ diagram }: { diagram: string }) => {
       theme: (isDarkMode ? "dark" : "default") as any,
       fontFamily: fontMono,
       securityLevel: "loose" as any,
+      maxTextSize: 250000,
     });
     mermaid.contentLoaded();
   }, [diagram]);
