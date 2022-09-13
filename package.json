@@ -10,6 +10,7 @@
     "clsx": "^1.2.1",
     "cross-fetch": "^3.1.5",
     "denque": "^2.1.0",
+    "graphology": "^0.24.1",
     "jotai": "^1.8.3",
     "just-squash": "^2.1.1",
     "mermaid": "^9.1.6",
