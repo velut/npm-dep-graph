@@ -1,15 +1,13 @@
 import { GetStaticPropsResult } from "next";
-import buildDiagram from "./build-diagram";
-import fetchPackages from "./fetch-packages";
+import fetchRootPackages from "./fetch-root-packages";
 import logger from "./logger";
+import { Package } from "./package";
 import packagesCanonicalRoute from "./packages-canonical-route";
-import { PackagesData } from "./packages-data";
 import packagesSlugRoute from "./packages-slug-route";
 import parseSlugPackageIds from "./parse-slug-package-ids";
 
 export interface PackagePageProps {
-  packagesData: PackagesData;
-  dependenciesDiagram: string;
+  rootPackages: Package[];
   [key: string]: unknown;
 }
 
@@ -19,15 +17,7 @@ const getPackagePageStaticProps = async (
   slug: string[]
 ): Promise<GetStaticPropsResult<PackagePageProps>> => {
   const slugIds = parseSlugPackageIds(slug);
-  const packagesData = await fetchPackages(slugIds);
-  const rootPackages = Object.entries(packagesData.packages).flatMap(
-    ([_, pkg]) => {
-      if (pkg.type !== "root") {
-        return [];
-      }
-      return pkg;
-    }
-  );
+  const rootPackages = await fetchRootPackages(slugIds);
   const originalRoute = packagesSlugRoute(slug);
   const canonicalRoute = packagesCanonicalRoute(rootPackages);
   if (originalRoute !== canonicalRoute) {
@@ -42,11 +32,9 @@ const getPackagePageStaticProps = async (
       },
     };
   }
-  const dependenciesDiagram = buildDiagram(packagesData);
   return {
     props: {
-      packagesData,
-      dependenciesDiagram,
+      rootPackages,
     },
   };
 };
