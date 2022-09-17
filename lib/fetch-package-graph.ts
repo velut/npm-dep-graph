@@ -1,55 +1,38 @@
 import Graph from "graphology";
 import PQueue from "p-queue";
+import dependenciesToPackages from "./dependencies-to-packages";
 import fetchPackageManifest from "./fetch-package-manifest";
-import fetchPackument from "./fetch-packument";
 import logger from "./logger";
-import maxSemverVersion from "./max-semver-version";
 import { Package } from "./package";
+import resolvePackage from "./resolve-package";
 
 const log = logger.child({ fn: "fetchPackageGraph" });
-
-const jobQueue = new PQueue({ concurrency: 10 });
 
 const fetchPackageGraphHelper = async (
   pkg: Package,
   graph: Graph,
-  seenIds: Set<string>
+  reqQueue: PQueue,
+  parentId?: string
 ): Promise<void> => {
-  if (seenIds.has(pkg.id)) {
-    return;
-  }
   try {
-    const packument = await fetchPackument(pkg.name);
-    const availableVersions = Object.keys(packument.versions);
-    const versionFromTag = packument.distTags[pkg.version];
-    const versionRange = versionFromTag ?? pkg.version;
-    const resolvedVersion = maxSemverVersion(versionRange, availableVersions);
-    if (!resolvedVersion) {
-      log.error({ pkg, availableVersions }, "cannot resolve package version");
+    const { id, name, version } = await resolvePackage(pkg.name, pkg.version);
+    const manifest = await fetchPackageManifest(name, version);
+    const [, isNewNode] = graph.mergeNode(id, {
+      type: pkg.type,
+      id,
+      name,
+      version,
+    });
+    if (parentId !== undefined) {
+      graph.mergeEdgeWithKey(`${parentId}->${id}`, parentId, id);
+    }
+    if (!isNewNode) {
       return;
     }
-    const resolvedName = packument.name;
-    const resolvedId = `${resolvedName}@${resolvedVersion}`;
-    if (seenIds.has(resolvedId)) {
-      return;
-    }
-    const manifest = await fetchPackageManifest(resolvedName, resolvedVersion);
-    seenIds.add(pkg.id);
-    seenIds.add(resolvedId);
-    if (!graph.hasNode(manifest.id)) {
-      graph.addNode(manifest.id);
-    }
-    const depPkgs = Object.entries(manifest.dependencies).map(
-      ([depName, depVersion]): Package => ({
-        type: "dep",
-        id: `${depName}@${depVersion}`,
-        name: depName,
-        version: depVersion,
-      })
-    );
-    jobQueue.addAll(
+    const depPkgs = dependenciesToPackages(manifest.dependencies);
+    reqQueue.addAll(
       depPkgs.map(
-        (depPkg) => () => fetchPackageGraphHelper(depPkg, graph, seenIds)
+        (depPkg) => () => fetchPackageGraphHelper(depPkg, graph, reqQueue, id)
       )
     );
   } catch (err) {
@@ -59,18 +42,18 @@ const fetchPackageGraphHelper = async (
 
 const fetchPackageGraph = async (rootPackages: Package[]): Promise<Graph> => {
   console.time("fetchPackageGraph");
+  const reqQueue = new PQueue({ concurrency: 25 });
   const graph = new Graph({
     type: "directed",
     allowSelfLoops: false,
     multi: false,
   });
-  const seenIds = new Set<string>();
-  jobQueue.addAll(
+  reqQueue.addAll(
     rootPackages.map(
-      (pkg) => () => fetchPackageGraphHelper(pkg, graph, seenIds)
+      (pkg) => () => fetchPackageGraphHelper(pkg, graph, reqQueue)
     )
   );
-  await jobQueue.onIdle();
+  await reqQueue.onIdle();
   log.info({ graph: graph.toJSON(), nodesLen: graph.order }, "final graph");
   console.timeEnd("fetchPackageGraph");
   return graph;
