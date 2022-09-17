@@ -1,4 +1,5 @@
 import { GetStaticPropsResult } from "next";
+import fetchPackageGraph from "./fetch-package-graph";
 import fetchRootPackages from "./fetch-root-packages";
 import logger from "./logger";
 import { Package } from "./package";
@@ -32,9 +33,11 @@ const getPackagePageStaticProps = async (
       },
     };
   }
+  const graph = await fetchPackageGraph(rootPackages);
   return {
     props: {
       rootPackages,
+      graph: graph.toJSON(),
     },
   };
 };

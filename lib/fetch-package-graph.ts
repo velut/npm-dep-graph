@@ -1,4 +1,7 @@
+import ColorHash from "color-hash";
 import Graph from "graphology";
+import { random } from "graphology-layout";
+import forceAtlas2 from "graphology-layout-forceatlas2";
 import PQueue from "p-queue";
 import dependenciesToPackages from "./dependencies-to-packages";
 import fetchPackageManifest from "./fetch-package-manifest";
@@ -7,6 +10,8 @@ import { Package } from "./package";
 import resolvePackage from "./resolve-package";
 
 const log = logger.child({ fn: "fetchPackageGraph" });
+
+const colorHash = new ColorHash();
 
 const fetchPackageGraphHelper = async (
   pkg: Package,
@@ -18,13 +23,24 @@ const fetchPackageGraphHelper = async (
     const { id, name, version } = await resolvePackage(pkg.name, pkg.version);
     const manifest = await fetchPackageManifest(name, version);
     const [, isNewNode] = graph.mergeNode(id, {
-      type: pkg.type,
+      pkgType: pkg.type,
       id,
       name,
       version,
+      // For rendering in Sigma.js
+      label: id,
+      size:
+        (pkg.type === "root" ? 25 : 10) +
+        Object.keys(manifest.dependencies).length,
+      color: colorHash.hex(id),
     });
     if (parentId !== undefined) {
-      graph.mergeEdgeWithKey(`${parentId}->${id}`, parentId, id);
+      graph.mergeEdgeWithKey(`${parentId}->${id}`, parentId, id, {
+        // For rendering in Sigma.js
+        type: "arrow",
+        size: 4,
+        color: colorHash.hex(parentId),
+      });
     }
     if (!isNewNode) {
       return;
@@ -54,7 +70,11 @@ const fetchPackageGraph = async (rootPackages: Package[]): Promise<Graph> => {
     )
   );
   await reqQueue.onIdle();
-  log.info({ graph: graph.toJSON(), nodesLen: graph.order }, "final graph");
+  random.assign(graph);
+  forceAtlas2.assign(graph, {
+    iterations: parseInt(process.env.FORCE_ATLAS_2_ITERATIONS!, 10),
+    settings: forceAtlas2.inferSettings(graph),
+  });
   console.timeEnd("fetchPackageGraph");
   return graph;
 };

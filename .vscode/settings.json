@@ -1,3 +1,10 @@
 {
-  "cSpell.ignoreWords": ["Packument", "clsx", "denque", "pino", "tailwindcss"]
+  "cSpell.ignoreWords": [
+    "Packument",
+    "clsx",
+    "denque",
+    "forceatlas2",
+    "pino",
+    "tailwindcss"
+  ]
 }
