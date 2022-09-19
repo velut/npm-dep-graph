@@ -15,7 +15,7 @@
     "graphology": "^0.24.1",
     "graphology-layout": "^0.6.0",
     "graphology-layout-forceatlas2": "^0.9.2",
-    "jotai": "^1.8.3",
+    "jotai": "^1.8.4",
     "just-squash": "^2.1.1",
     "lodash": "^4.17.21",
     "mermaid": "^9.1.7",
