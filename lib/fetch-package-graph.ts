@@ -9,13 +9,31 @@ import logger from "./logger";
 import { Package } from "./package";
 import resolvePackage from "./resolve-package";
 
+export interface PackageGraphNodeAttrs {
+  pkgType: string;
+  id: string;
+  name: string;
+  version: string;
+  label: string;
+  size: number;
+  color: string;
+}
+
+export interface PackageGraphEdgeAttrs {
+  type: string;
+  size: number;
+  color: string;
+}
+
+export type PackageGraph = Graph<PackageGraphNodeAttrs, PackageGraphEdgeAttrs>;
+
 const log = logger.child({ fn: "fetchPackageGraph" });
 
 const colorHash = new ColorHash();
 
 const fetchPackageGraphHelper = async (
   pkg: Package,
-  graph: Graph,
+  graph: PackageGraph,
   reqQueue: PQueue,
   parentId?: string
 ): Promise<void> => {
@@ -56,10 +74,12 @@ const fetchPackageGraphHelper = async (
   }
 };
 
-const fetchPackageGraph = async (rootPackages: Package[]): Promise<Graph> => {
+const fetchPackageGraph = async (
+  rootPackages: Package[]
+): Promise<PackageGraph> => {
   console.time("fetchPackageGraph");
   const reqQueue = new PQueue({ concurrency: 25 });
-  const graph = new Graph({
+  const graph = new Graph<PackageGraphNodeAttrs, PackageGraphEdgeAttrs>({
     type: "directed",
     allowSelfLoops: false,
     multi: false,
