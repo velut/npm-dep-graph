@@ -13,7 +13,7 @@ const cache = new ExpiryMap(2 * 60 * 1000);
 
 const _fetchPackageManifest = async (
   name: string,
-  version = "latest"
+  version: string
 ): Promise<PackageManifest> => {
   if (!validateNpmPackageName(name).validForOldPackages) {
     log.error({ pkgName: name }, "invalid name for package");
