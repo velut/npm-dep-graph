@@ -77,7 +77,6 @@ const fetchPackageGraphHelper = async (
 const fetchPackageGraph = async (
   rootPackages: Package[]
 ): Promise<PackageGraph> => {
-  console.time("fetchPackageGraph");
   const reqQueue = new PQueue({ concurrency: 25 });
   const graph = new Graph<PackageGraphNodeAttrs, PackageGraphEdgeAttrs>({
     type: "directed",
@@ -95,7 +94,6 @@ const fetchPackageGraph = async (
     iterations: parseInt(process.env.FORCE_ATLAS_2_ITERATIONS!, 10),
     settings: forceAtlas2.inferSettings(graph),
   });
-  console.timeEnd("fetchPackageGraph");
   return graph;
 };
 
