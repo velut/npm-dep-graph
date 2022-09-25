@@ -7,25 +7,12 @@ import dependenciesToPackages from "./dependencies-to-packages";
 import fetchPackageManifest from "./fetch-package-manifest";
 import logger from "./logger";
 import { Package } from "./package";
+import {
+  PackageGraph,
+  PackageGraphEdgeAttrs,
+  PackageGraphNodeAttrs,
+} from "./package-graph";
 import resolvePackage from "./resolve-package";
-
-export interface PackageGraphNodeAttrs {
-  pkgType: string;
-  id: string;
-  name: string;
-  version: string;
-  label: string;
-  size: number;
-  color: string;
-}
-
-export interface PackageGraphEdgeAttrs {
-  type: string;
-  size: number;
-  color: string;
-}
-
-export type PackageGraph = Graph<PackageGraphNodeAttrs, PackageGraphEdgeAttrs>;
 
 const log = logger.child({ fn: "fetchPackageGraph" });
 
