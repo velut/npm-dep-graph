@@ -18,7 +18,7 @@ const PackagePage = (props: PackagePageProps) => {
     <div>
       ok
       <div>
-        <SigmaGraph graph={props.graph} />
+        <SigmaGraph graph={props.serializedGraph} />
       </div>
     </div>
   );

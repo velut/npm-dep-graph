@@ -3,12 +3,14 @@ import fetchPackageGraph from "./fetch-package-graph";
 import fetchRootPackages from "./fetch-root-packages";
 import logger from "./logger";
 import { Package } from "./package";
+import { SerializedPackageGraph } from "./package-graph";
 import packagesCanonicalRoute from "./packages-canonical-route";
 import packagesSlugRoute from "./packages-slug-route";
 import parseSlugPackageIds from "./parse-slug-package-ids";
 
 export interface PackagePageProps {
   rootPackages: Package[];
+  serializedGraph: SerializedPackageGraph;
   [key: string]: unknown;
 }
 
@@ -37,7 +39,7 @@ const getPackagePageStaticProps = async (
   return {
     props: {
       rootPackages,
-      graph: graph.toJSON(),
+      serializedGraph: graph.export(),
     },
   };
 };
