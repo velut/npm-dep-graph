@@ -673,10 +673,10 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@react-sigma/core@^3.0.2":
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/@react-sigma/core/-/core-3.0.2.tgz#e1032ec322c5fb5cec63c29272a71d79bcc20381"
-  integrity sha512-Hs0Srr5vOI2AIJH6LgrqjxgxkN24uUHEVore/1GAChcWFYuwjRrY2y/oYlhY4q/4+baHpNa2NIvdhR/dhHj7Bg==
+"@react-sigma/core@^3.0.3":
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/@react-sigma/core/-/core-3.0.3.tgz#15a4d78e5da7a75b678a470006e21e74d5b7939c"
+  integrity sha512-aKu3BV3wamtw/1J7AT6ubDsepaL+VSfXE2MxBoP2AbmNEobXXapJZQImt21X2kxRh0/DKvyGV+EVmOLOZcUh4w==
 
 "@sinclair/typebox@^0.24.1":
   version "0.24.34"
