@@ -1,28 +1,16 @@
-import { SigmaContainer, useLoadGraph } from "@react-sigma/core";
+import { SigmaContainer } from "@react-sigma/core";
 import "@react-sigma/core/lib/react-sigma.min.css";
-import Graph from "graphology";
-import { useEffect } from "react";
+import { SerializedPackageGraph } from "../lib/package-graph";
+import LoadSigmaGraph from "./LoadSigmaGraph";
 
-export const LoadGraph = ({
+const SigmaGraph = ({
   serializedGraph,
 }: {
-  serializedGraph: unknown;
+  serializedGraph: SerializedPackageGraph;
 }) => {
-  const loadGraph = useLoadGraph();
-
-  useEffect(() => {
-    const graph = new Graph();
-    graph.import(serializedGraph as any);
-    loadGraph(graph);
-  }, [loadGraph]);
-
-  return null;
-};
-
-const SigmaGraph = ({ graph }: { graph: unknown }) => {
   return (
-    <SigmaContainer style={{ height: "1000px", width: "1000px" }}>
-      <LoadGraph serializedGraph={graph} />
+    <SigmaContainer>
+      <LoadSigmaGraph serializedGraph={serializedGraph} />
     </SigmaContainer>
   );
 };

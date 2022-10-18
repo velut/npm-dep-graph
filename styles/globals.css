@@ -4,5 +4,5 @@
 
 .sigma-container {
   @apply bg-white;
-  @apply dark:bg-stone-500;
+  @apply dark:bg-neutral-500;
 }

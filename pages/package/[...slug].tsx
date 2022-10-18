@@ -1,13 +1,9 @@
 import { GetStaticPaths, GetStaticProps } from "next";
-import dynamic from "next/dynamic";
 import { useEffect } from "react";
+import PackageGraph from "../../components/PackageGraph";
 import getPackagePageStaticProps, {
   PackagePageProps,
 } from "../../lib/get-package-page-static-props";
-
-const SigmaGraph = dynamic(() => import("../../components/SigmaGraph"), {
-  ssr: false,
-});
 
 const PackagePage = (props: PackagePageProps) => {
   useEffect(() => {
@@ -16,10 +12,8 @@ const PackagePage = (props: PackagePageProps) => {
 
   return (
     <div>
+      <PackageGraph serializedGraph={props.serializedGraph} />
       ok
-      <div>
-        <SigmaGraph graph={props.serializedGraph} />
-      </div>
     </div>
   );
 };
