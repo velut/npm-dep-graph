@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import { SerializedPackageGraph } from "../lib/package-graph";
+import { PackagePageProps } from "../lib/get-package-page-static-props";
 
 const SigmaGraph = dynamic(() => import("./SigmaGraph"), {
   ssr: false,
@@ -7,9 +7,7 @@ const SigmaGraph = dynamic(() => import("./SigmaGraph"), {
 
 const PackageGraph = ({
   serializedGraph,
-}: {
-  serializedGraph: SerializedPackageGraph;
-}) => {
+}: Pick<PackagePageProps, "serializedGraph">) => {
   return (
     <div className="flex justify-center">
       <div className="relative h-96 w-full shadow">
