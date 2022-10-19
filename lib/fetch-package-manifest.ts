@@ -9,7 +9,7 @@ import registryApi from "./registry-api";
 
 const log = logger.child({ fn: "fetchPackageManifest" });
 
-const cache = new ExpiryMap(10 * 60 * 1000);
+const cache = new ExpiryMap(parseInt(process.env.REGISTRY_CACHE_TTL!, 10));
 
 const _fetchPackageManifest = async (
   name: string,

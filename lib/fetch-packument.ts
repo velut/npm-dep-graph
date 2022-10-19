@@ -9,7 +9,7 @@ import registryApi from "./registry-api";
 
 const log = logger.child({ fn: "fetchPackument" });
 
-const cache = new ExpiryMap(2 * 60 * 1000);
+const cache = new ExpiryMap(parseInt(process.env.REGISTRY_CACHE_TTL!, 10));
 
 const abbreviatedOrFullPackument =
   "application/vnd.npm.install-v1+json;q=1.0,application/json;q=0.8,*/*";
