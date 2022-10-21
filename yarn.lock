@@ -309,6 +309,46 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
+"@iconify/icons-bi@1.2.10":
+  version "1.2.10"
+  resolved "https://registry.yarnpkg.com/@iconify/icons-bi/-/icons-bi-1.2.10.tgz#c37895f45a16fb80d1eb41884ce9949f4fa68075"
+  integrity sha512-EopBjYjXRufFwlsD9hejoK8YSvt5X4+cW0t6OeXP/EIlZmjEmXjejxZPzOUZgnU7B25TpLbvmxQlPozpxtDB+w==
+  dependencies:
+    "@iconify/types" "*"
+
+"@iconify/icons-fa6-brands@1.2.6":
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/@iconify/icons-fa6-brands/-/icons-fa6-brands-1.2.6.tgz#7044439a04a1dcadc643c5da0837b4e1427b5e75"
+  integrity sha512-54HM/be4jhjfQhOX3sB4Z4mIypn+1+SqTsMdHkHwEoZyR6K0YxJNGznV+gabv+/Qft+jhCxih0ydKZpE3uYAiQ==
+  dependencies:
+    "@iconify/types" "*"
+
+"@iconify/icons-file-icons@1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@iconify/icons-file-icons/-/icons-file-icons-1.2.2.tgz#13c8d4de337aa324107ff10cb54e394ed5109d25"
+  integrity sha512-QTRmye4JZN7l5TGh4SpZoQsprVkyPUOrcjzs/+oEU5aG7zERQhPWgc+O9YJCc8LC0tDDnMGNFUnGLvZ+3O71CQ==
+  dependencies:
+    "@iconify/types" "*"
+
+"@iconify/icons-fluent-emoji-high-contrast@1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@iconify/icons-fluent-emoji-high-contrast/-/icons-fluent-emoji-high-contrast-1.2.2.tgz#baee28355630e3e6e6d979e21c004bdadc9cbe21"
+  integrity sha512-+J9t24ZRvlnxwhd6B7S4BKSu79mb6+CM9+aWWAZqfPJku78ajfFhRQfloU3uSSZrcl9d0uBQZPrHejc/pTgS8w==
+  dependencies:
+    "@iconify/types" "*"
+
+"@iconify/react@4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@iconify/react/-/react-4.0.0.tgz#0e2238fec072bfca0f2b9b6ff9e60c721c4abf32"
+  integrity sha512-YE+z5PCegYyuJtLR6KBbJNlssmuVgRyFyRxcgxSPVkN3Gsm7npSzrUh+gWlBxrNb5g4Q6Nnb1gczPBNcwtUpng==
+  dependencies:
+    "@iconify/types" "^2.0.0"
+
+"@iconify/types@*", "@iconify/types@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@iconify/types/-/types-2.0.0.tgz#ab0e9ea681d6c8a1214f30cd741fe3a20cc57f57"
+  integrity sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==
+
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@istanbuljs/load-nyc-config/-/load-nyc-config-1.1.0.tgz#fd3db1d59ecf7cf121e80650bb86712f9b55eced"
