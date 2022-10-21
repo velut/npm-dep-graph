@@ -17,8 +17,7 @@ const IconLink = ({
         className={clsx(
           "p-3 rounded",
           "text-stone-500",
-          "hover:bg-stone-200 hover:text-black",
-          "dark:hover:bg-stone-400"
+          "hover:bg-stone-300 hover:text-black"
         )}
         title={title}
       >
