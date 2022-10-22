@@ -10,7 +10,7 @@ const PackageGraph = ({
 }: Pick<PackagePageProps, "serializedGraph">) => {
   return (
     <div className="flex justify-center">
-      <div className="relative h-96 w-full shadow">
+      <div className="relative h-96 w-full shadow-md">
         <SigmaGraph serializedGraph={serializedGraph} />
       </div>
     </div>
