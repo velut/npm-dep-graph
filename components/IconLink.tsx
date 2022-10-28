@@ -12,17 +12,16 @@ const IconLink = ({
   icon: string | IconifyIcon;
 }) => {
   return (
-    <Link href={href}>
-      <a
-        className={clsx(
-          "p-3 rounded",
-          "text-stone-500",
-          "hover:bg-stone-300 hover:text-black"
-        )}
-        title={title}
-      >
-        <Icon className="h-6 w-6" icon={icon} />
-      </a>
+    <Link
+      className={clsx(
+        "p-3 rounded",
+        "text-stone-500",
+        "hover:bg-stone-300 hover:text-black"
+      )}
+      href={href}
+      title={title}
+    >
+      <Icon className="h-6 w-6" icon={icon} />
     </Link>
   );
 };
